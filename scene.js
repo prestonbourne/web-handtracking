@@ -25,12 +25,11 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 , wireframe:true}
 
  
   const cubes = [];
-
- 
+  let areCubesAdded = false;
  function manageHand(){
 
   const landmarks = store.get("landmarks");
-  let areCubesAdded = false;
+
 
     if(areCubesAdded === false && landmarks.length > 0){
      for (let i = 0; i < landmarks.length; i++) {
@@ -43,7 +42,7 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 , wireframe:true}
     }
 
 
-    if (landmarks.length  > 0) {
+    if (landmarks.length  > 0 && areCubesAdded === true) {
 
      for (let i = 0; i < landmarks.length; i++) {
       
@@ -52,7 +51,6 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 , wireframe:true}
       cubes[i].position.z = landmarks[i].z * 3;
     
      }}
-     console.log(cubes.length)
    }
   
 
