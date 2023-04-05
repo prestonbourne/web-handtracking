@@ -4,12 +4,14 @@ specifiers:
   '@mediapipe/drawing_utils': ^0.3.1675466124
   '@mediapipe/hands': ^0.4.1675469240
   '@mediapipe/tasks-vision': 0.1.0-alpha-7
+  three: ^0.151.3
   vite: ^4.2.0
 
 dependencies:
   '@mediapipe/drawing_utils': 0.3.1675466124
   '@mediapipe/hands': 0.4.1675469240
   '@mediapipe/tasks-vision': 0.1.0-alpha-7
+  three: 0.151.3
 
 devDependencies:
   vite: 4.2.1
@@ -330,6 +332,10 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
     dev: true
+
+  /three/0.151.3:
+    resolution: {integrity: sha512-+vbuqxFy8kzLeO5MgpBHUvP/EAiecaDwDuOPPDe6SbrZr96kccF0ktLngXc7xA7bzyd3N0t2f6mw3Z9y6JCojQ==}
+    dev: false
 
   /vite/4.2.1:
     resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
