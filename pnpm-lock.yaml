@@ -1,7 +1,15 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@mediapipe/drawing_utils': ^0.3.1675466124
+  '@mediapipe/hands': ^0.4.1675469240
+  '@mediapipe/tasks-vision': 0.1.0-alpha-7
   vite: ^4.2.0
+
+dependencies:
+  '@mediapipe/drawing_utils': 0.3.1675466124
+  '@mediapipe/hands': 0.4.1675469240
+  '@mediapipe/tasks-vision': 0.1.0-alpha-7
 
 devDependencies:
   vite: 4.2.1
@@ -205,6 +213,18 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@mediapipe/drawing_utils/0.3.1675466124:
+    resolution: {integrity: sha512-/IWIB/iYRMtiUKe3k7yGqvwseWHCOqzVpRDfMgZ6gv9z7EEimg6iZbRluoPbcNKHbYSxN5yOvYTzUYb8KVf22Q==}
+    dev: false
+
+  /@mediapipe/hands/0.4.1675469240:
+    resolution: {integrity: sha512-GxoZvL1mmhJxFxjuyj7vnC++JIuInGznHBin5c7ZSq/RbcnGyfEcJrkM/bMu5K1Mz/2Ko+vEX6/+wewmEHPrHg==}
+    dev: false
+
+  /@mediapipe/tasks-vision/0.1.0-alpha-7:
+    resolution: {integrity: sha512-Ct+yEd1OU1W5MKDtmtujT3jTxFJRTJI4k6j1rjoBDJnlpgvqlvS+f4hKwnc9Ypzwwyjm3ehZ9kMWW1Lc7qLalg==}
+    dev: false
 
   /esbuild/0.17.15:
     resolution: {integrity: sha512-LBUV2VsUIc/iD9ME75qhT4aJj0r75abCVS0jakhFzOtR7TQsqQA5w0tZ+KTKnwl3kXE0MhskNdHDh/I5aCR1Zw==}
