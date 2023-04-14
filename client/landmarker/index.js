@@ -10,7 +10,8 @@ const handLandmarker = await HandLandmarker.createFromOptions(
      baseOptions: {
        modelAssetPath: "landmarker/hand_landmarker.task"
      },
-     numHands: 1
+     numHands: 1,
+     runningMode: "VIDEO"
    });
 
  
