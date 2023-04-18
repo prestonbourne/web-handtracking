@@ -83,7 +83,7 @@ async function predictWebcam() {
   video.style.width = videoWidth;
   // Now let's start detecting the stream.
 
-  let nowInMs = Date.now();
+  const nowInMs = Date.now();
   const results = handLandmarker.detectForVideo(video, nowInMs);
 
   canvasCtx.save();
