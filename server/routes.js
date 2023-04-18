@@ -19,8 +19,6 @@ router.post('/', (req, res) => {
  const newStatus = req.body.status;
  
 
-
-
 if(newStatus === "true"){
   state.lightStatus = LIGHT.ON
 }else{
