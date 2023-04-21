@@ -69,18 +69,6 @@ class Store {
     this._setMainPoint(this._followPoint);
   }
 
-  /**
-   * @param {FollowPoint} point
-   */
-  _setMainPoint(point = "palm") {
-    if (point === "palm") {
-      this._mainPoint = this.landmarks[0];
-    }
-
-    if (point === "wrist") {
-      this._mainPoint = this.landmarks[9];
-    }
-  }
 
   get mainPoint() {
     return this._mainPoint;
