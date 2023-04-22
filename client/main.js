@@ -1,7 +1,7 @@
 import handLandmarker from "./landmarker";
 import {drawConnectors, drawLandmarks, } from "@mediapipe/drawing_utils"
 import {HAND_CONNECTIONS} from "@mediapipe/hands"
-import handData from "./store";
+import handModel from "./hand.model";
 
 (function main(){
 
@@ -16,6 +16,7 @@ let removeLater = false
 const inoButton = document.getElementById("ino");
 inoButton.addEventListener("click", (e) => {
 
+  
   removeLater = !removeLater
   
 
@@ -92,7 +93,7 @@ async function predictWebcam() {
    
     for (const landmarks of results.landmarks) {
 
-      handData.setLandmarks(landmarks)
+      handModel.setLandmarks(landmarks)
       drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
         color: "#00FF00",
         lineWidth: 5
