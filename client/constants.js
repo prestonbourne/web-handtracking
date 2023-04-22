@@ -1,0 +1,1 @@
+export const UPDATE_LANDMARKS_EVENT = "update_landmarks"
