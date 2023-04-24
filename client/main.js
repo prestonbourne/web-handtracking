@@ -2,6 +2,7 @@ import handLandmarker from "./landmarker";
 import {drawConnectors, drawLandmarks, } from "@mediapipe/drawing_utils"
 import {HAND_CONNECTIONS} from "@mediapipe/hands"
 import handModel from "./hand.model";
+import { postData } from "./utils/helpers";
 
 (function main(){
 
@@ -16,20 +17,22 @@ let removeLater = false
 const inoButton = document.getElementById("ino");
 inoButton.addEventListener("click", (e) => {
 
-  
+
   removeLater = !removeLater
+  postData({status: removeLater});
+
   
 
-  fetch('http://localhost:3001/', {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ "status": `${removeLater}`  })
-})
-   .then(response => response.json())
-   .then(response => console.log(JSON.stringify(response)))
+//   fetch('http://localhost:3001/', {
+//     method: 'POST',
+//     headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ "status": `${removeLater}`  })
+// })
+//    .then(response => response.json())
+//    .then(response => console.log(JSON.stringify(response)))
   
 })
 
