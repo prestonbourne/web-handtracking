@@ -1,4 +1,4 @@
-import { UPDATE_LANDMARKS_EVENT } from "./constants";
+import { UPDATE_LANDMARKS_EVENT } from "./utils/constants";
 
 /**
  * @typedef Landmark

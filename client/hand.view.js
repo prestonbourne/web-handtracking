@@ -1,4 +1,4 @@
-import { UPDATE_LANDMARKS_EVENT } from "./constants";
+import { UPDATE_LANDMARKS_EVENT } from "./utils/constants";
 import handData from "./hand.model";
 import * as THREE from "three";
 
@@ -48,7 +48,7 @@ class HandCubes {
     if (!this.cubesAdded) {
       throw new Error("Cubes not ready, use create cubes method first");
     }
-    
+
     for (let index = 0; index < this.landmarks.length; index++) {
       const currLndmrk = this.landmarks[index];
 
