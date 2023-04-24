@@ -4,18 +4,25 @@ import * as THREE from "three";
 
 class HandCubes {
   constructor() {
- 
+    this.debugMode = false;
     this.cubes = [];
     this.landmarks = [];
-    this._updateLandsMarks()
+    this.arrowGroup = new THREE.Group();
+    this.rayGroup = [];
+
+    this._updateLandsMarks();
   }
 
-  get cubesAdded() {
+  get _cubesAdded() {
     return this.cubes.length === 21;
   }
 
+  get raysAdded() {
+    return this.rayGroup.length === 21;
+  }
+
   createCubes(geometry, material) {
-    if (this.cubesAdded === true) {
+    if (this._cubesAdded === true) {
       console.warn("Cubes already exist");
       return;
     }
@@ -27,7 +34,7 @@ class HandCubes {
   }
 
   addCubesToScene(scene) {
-    if (!this.cubesAdded) {
+    if (!this._cubesAdded) {
       console.log(this.cubes.length);
       console.error("add cubes first");
     }
@@ -44,10 +51,63 @@ class HandCubes {
     window.addEventListener(UPDATE_LANDMARKS_EVENT, handle);
   }
 
-  render(camera) {
-    if (!this.cubesAdded) {
-      throw new Error("Cubes not ready, use create cubes method first");
+  _createRaycasters(scene) {
+    if (!this._cubesAdded || this.raysAdded) return;
+
+    this.cubes.forEach((cube) => {
+      const raycaster = new THREE.Raycaster();
+      raycaster.set(cube.position, new THREE.Vector3(0, 0, 1).normalize());
+      this.rayGroup.push(raycaster);
+    });
+  }
+
+  _handleArrows() {
+    if (this.debugMode === false) {
+      return;
     }
+
+    this.rayGroup.forEach((raycaster) => {
+      const arrow = new THREE.ArrowHelper(
+        raycaster.ray.direction,
+        raycaster.ray.origin,
+        300,
+        0xff0000
+      );
+
+      this.arrowGroup.add(arrow);
+    });
+
+   
+ 
+  }
+
+  _sendCollision() {
+    // console.log("Sending Data");
+  }
+
+  _handleCollisions(scene) {
+    if (!this._cubesAdded && !this.raysAdded) return;
+
+    this.debugMode && this.arrowGroup.clear();
+
+    this.rayGroup.forEach((ray) => {
+      const intersects = ray.intersectObjects(scene.children);
+
+      if (intersects.length && this._cubesAdded) {
+        this._sendCollision();
+      }
+    });
+  }
+
+  render(camera, scene, debugMode) {
+    if (this._cubesAdded === false) {
+      throw new Error("add cubes first. createCubes method");
+    }
+
+    this.debugMode = debugMode;
+    this._createRaycasters(scene);
+    // this._handleArrows();
+    // this._handleCollisions(scene);
 
     for (let index = 0; index < this.landmarks.length; index++) {
       const currLndmrk = this.landmarks[index];
@@ -63,7 +123,6 @@ class HandCubes {
       dir.setX(-dir.x);
       //   const distance = -camera.position.z / dir.z; <- leave comment, this maps hands z coordinate to cameras z coordinate
       const pos = camera.position.clone().add(dir);
-
       this.cubes[index].position.copy(pos);
     }
   }

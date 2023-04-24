@@ -2,6 +2,7 @@ import * as THREE from "three";
 import handData from "./hand.model";
 import handCubes from "./hand.view";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { postData } from "./utils/helpers";
 
 let camera, scene, renderer, controls;
 (function initScene() {
@@ -44,7 +45,6 @@ const cubes = [];
 let areCubesAdded = false;
 function manageHand() {
   const { landmarks } = handData;
-  console.log(landmarks)
 
   if (areCubesAdded === false && landmarks.length > 0) {
     for (let i = 0; i < landmarks.length; i++) {
@@ -70,6 +70,7 @@ function manageHand() {
       dir.setX(-dir.x);
       const distance = -camera.position.z / dir.z;
       const pos = camera.position.clone().add(dir);
+      // const pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
       cubes[i].position.copy(pos);
     }
@@ -82,14 +83,13 @@ let sentOnce = false;
 const rayParent = new THREE.Group();
 scene.add(rayParent);
 function manageRaycasters() {
-  if (handCubes.cubesAdded) return;
+  if (!areCubesAdded) return;
 
+  if(!areRaysAdded){
   cubes.forEach((cu) => {
-    if (!areRaysAdded) {
+  
       const raycaster = new THREE.Raycaster();
       raycaster.set(cu.position, new THREE.Vector3(0, 0, 1).normalize());
-
-      raycaster.ray.direction;
 
       const arrow = new THREE.ArrowHelper(
         raycaster.ray.direction,
@@ -104,68 +104,50 @@ function manageRaycasters() {
         raycaster: raycaster,
         arrow: arrow,
       });
-    }
+    
+     
     scene.add(rayParent);
-    if (areCubesAdded && areRaysAdded) {
-      rayParent.clear();
-      for (let index = 0; index < cubes.length; index++) {
-        const currCube = cubes[index];
-        const currRaycaster = rays[index].raycaster.ray;
-        //  const currArrow =  rays[index].arrow;
-        // rays[index].arrow.dispose();
-        //  rays[index].arrow.position.set(cubes[index].position)
+  })
+  areRaysAdded = true
+}
 
-        const intersects = rays[index].raycaster.intersectObjects(
-          scene.children
-        );
+console.log(rays.length)
+  if (areCubesAdded && rays.length === 21) {
+    rayParent.clear();
+    
+   
+    for (let index = 0; index < rays.length; index++) {
+      
+      const currRaycaster = rays[index].raycaster.ray;
 
-
-        
-        if (intersects.length) {
-          console.log(intersects.length)
-          if(sentOnce === false){
-            console.log('fired')
-          fetch("http://localhost:3001/", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({"status": "true" }),
-          })
-            .then((response) => response.json())
-            .then((response) => console.log(JSON.stringify(response)));
-            sentOnce = true
+      const intersects = rays[index].raycaster.intersectObjects(scene.children);
+  
+      console.log(intersects.length)
+      if (intersects.length) {
+       
+        if (sentOnce === false) {
+         // postData({ status: true });
+         console.log('touch')
+          sentOnce = true;
         }
-        // }else{
-        //   fetch("http://localhost:3001/", {
-        //     method: "POST",
-        //     headers: {
-        //       Accept: "application/json",
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({ status: false }),
-        //   })
-        //     .then((response) => response.json())
-        //     .then((response) => console.log(JSON.stringify(response)));
-        // }
       }
-    //    console.log(intersects.length)
-        currRaycaster.origin = currCube.position;
-
-        const arrow = new THREE.ArrowHelper(
-          currRaycaster.direction,
-          currRaycaster.origin,
-          300,
-          0xff0000
-        );
-
-        rayParent.add(arrow);
-      }
+     
+      currRaycaster.origin = cubes[index].position;
+  
+      const arrow = new THREE.ArrowHelper(
+        currRaycaster.direction,
+        currRaycaster.origin,
+        300,
+        0xff0000
+      );
+  
+      rayParent.add(arrow);
     }
-  });
+  
 
-  areRaysAdded = true;
+   
+
+  }
 }
 
 const axesHelper = new THREE.AxesHelper(5);
@@ -178,7 +160,7 @@ const test = new THREE.Mesh(geometry, material);
 const test2 = new THREE.Mesh(geometry, material);
 test.scale.set(10, 10, 10);
 test.position.z = 8;
-test2.scale.set(10, 10, 10);
+test2.scale.set(15, 15, 15);
 test2.position.z = 12;
 test.position.x += 2;
 //test.scale = new THREE.Vector3(5,5,5)
@@ -186,22 +168,19 @@ test.position.x += 2;
 scene.add(test);
 scene.add(test2);
 
-
- handCubes.createCubes(geometry, material);
- handCubes.addCubesToScene(scene);
-
-
+  handCubes.createCubes(geometry, material);
+  handCubes.addCubesToScene(scene);
+  scene.add(handCubes.arrowGroup);
+ 
 (function animate() {
 //  manageHand();
- handCubes.render(camera)
-//  manageRaycasters();
+//  manageRaycasters()
+   handCubes.render(camera, scene, true)
+ 
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 
   // Rotate the cube mesh
   test.rotation.x += 0.01;
   test.rotation.y += 0.01;
-  // console.log(scene.children)
-})()
-
-
+})();

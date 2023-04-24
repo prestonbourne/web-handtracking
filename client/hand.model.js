@@ -25,6 +25,8 @@ class HandModel {
     window.dispatchEvent(new Event(UPDATE_LANDMARKS_EVENT));
   }
 
+
+
 }
 
 const model = new HandModel();
