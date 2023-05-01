@@ -108,7 +108,7 @@ class HandManager {
     
       intersects.forEach((intersection) => {
        
-        if(intersection.distance <= 0.01){
+        if(intersection.distance <= 0.2){
           console.log(intersection)
           window.dispatchEvent(new CustomEvent(EVENTS.HAND_COLLIDE , {detail: intersection.object}))
         }
@@ -120,7 +120,7 @@ class HandManager {
 
   }
 
-  _placeCubesByLandmark(camera){
+  _placeCubesByLandmark(camera, deltaTime){
     for (let index = 0; index < this.landmarks.length; index++) {
       const currLndmrk = this.landmarks[index];
 
@@ -142,7 +142,7 @@ class HandManager {
     }
   }
 
-  render(camera, scene, debugMode = false) {
+  render(camera, scene, debugMode = false, deltaTime) {
   
     if (this._cubesAdded === false) {
       throw new Error("add cubes first. createCubes method");
@@ -152,7 +152,7 @@ class HandManager {
     this._handleRaycasters(scene);
     this._handleArrows();
     this._handleCollisions();
-    this._placeCubesByLandmark(camera)
+    this._placeCubesByLandmark(camera, deltaTime)
 
   }
 }

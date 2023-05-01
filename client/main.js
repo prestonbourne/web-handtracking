@@ -99,7 +99,7 @@ socket.on("connect", () => {console.log('wtd') });
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
-    gameManger.play()
+    
 
     if (results.landmarks) {
       for (const landmarks of results.landmarks) {

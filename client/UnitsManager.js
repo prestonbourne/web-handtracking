@@ -41,7 +41,8 @@ class UnitsManager {
 
   _spawnCube() {
     const newCube = new THREE.Mesh(this.randomGeometry, this.randomMaterial);
-    newCube.position.setX(generateNumberBetween(-1, 1));
+    newCube.position.setX(generateNumberBetween(-2, 2));
+   
     newCube.position.setY(generateNumberBetween(1, 2));
     newCube.position.setZ(-12);
 
@@ -50,22 +51,25 @@ class UnitsManager {
 
   handleAnimateObjects(deltaTime) {
   
-    this.activeObjects.children.forEach((obj) => {
+    this.activeObjects.children.forEach((obj, i) => {
      
     
+    
      
-      obj.position.z += 0.01 + deltaTime;
+      obj.position.z += 2 * deltaTime;
+    
+      
     });
   }
 
   _handleAddObjects() {
   
-    setInterval(this._spawnCube.bind(this), 2000);
+    setInterval(this._spawnCube.bind(this), 2400);
   }
 
   _handleRemoveObjects() {
     this.activeObjects.children.forEach((obj) => {
-      if (obj.position.z >= 12) {
+      if (obj.position.z >= 8) {
         this.activeObjects.remove(obj);
       }
     });

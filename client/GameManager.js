@@ -12,7 +12,12 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 const throttledPostData = throttle((data) => postData(data), 300);
 
 class GameManager {
-  constructor() {
+  /**
+   * 
+   * @param {boolean} debugMode 
+   */
+  constructor(debugMode) {
+    this.debugMode = debugMode
     this.isPlaying = false;
 
     this.scene = new THREE.Scene();
@@ -102,39 +107,30 @@ class GameManager {
     this._init();
     this.isPlaying = true;
     unitsManager.start();
-    uiManager.init()
+    uiManager.init(this.debugMode);
+    gameManger.play()
   }
 
   play() {
+   
+    uiManager.statsBegin()
+
     unitsManager.handleAnimateObjects(this.deltaTime);
     unitsManager._handleRemoveObjects();
     handManager.landmarks = landmarkStore.landmarks;
 
     // renderer.render(scene, camera);
-
-    handManager.render(this.camera, this.scene, true);
-
-    //   // Cam 2
-    //   renderer.clearDepth();
-    //  // renderer.setScissorTest(true)
-    //   renderer.setScissor(
-    //     window.innerWidth - insetWidth - 4,
-    //     window.innerHeight - insetHeight - 4,
-    //     insetWidth,
-    //     insetHeight
-    //   );
-
-    //   renderer.setViewport(
-    //     window.innerWidth - insetWidth - 4,
-    //     window.innerHeight - insetHeight - 4,
-    //     insetWidth,
-    //     insetHeight
-    //   );
+   
+    handManager.render(this.camera, this.scene, true, this.deltaTime);
+  
 
     this.renderer.render(this.scene, this.debugCam);
+  
 
+    uiManager.statsEnd()
     window.requestAnimationFrame(this.play.bind(this));
+    
   }
 }
 
-export const gameManger = new GameManager();
+export const gameManger = new GameManager(true);
