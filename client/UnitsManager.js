@@ -1,49 +1,67 @@
 import * as THREE from "three";
-import { generateNumberBetween } from "./utils/helpers";
+import { generateRandFloat, generateRandInt } from "./utils/helpers";
 
 class UnitsManager {
   constructor() {
     this.activeObjects = new THREE.Group();
+    this.materials = []
+    
+    
+  }
+
+   _createMaterials(){
+
+   const wireframeRed = new THREE.MeshBasicMaterial({
+    color: "red",
+  });
+  const wireframeGreen = new THREE.MeshBasicMaterial({
+    color: "green",
+  });
+
+  const wireFrameBlue = new THREE.MeshBasicMaterial({
+    color: "blue",
+  });
+
+  const materials = [wireframeRed, wireframeGreen, wireFrameBlue];
+
+  this.materials = materials;
+
   }
 
   start() {
+   this._createMaterials();
     this._handleAddObjects();
   }
 
   get randomGeometry() {
-    const geometry = new THREE.BoxGeometry(0.7, 0.7, 0.7);
+
+   
+  
+    const geometry = new THREE.BoxGeometry(
+     generateRandFloat(0.3,0.6),
+     generateRandFloat(0.3,0.6),
+     1,
+    );
 
     return geometry;
   }
 
   get randomMaterial() {
-    const wireframeRed = new THREE.MeshBasicMaterial({
-      color: "red",
-    });
-    const wireframeGreen = new THREE.MeshBasicMaterial({
-      color: "green",
-    });
 
-    const wireFrameBlue = new THREE.MeshBasicMaterial({
-      color: "blue",
-    });
+   const randomIdx = Math.floor(generateRandInt(0, this.materials.length - 1));
 
-    const materials = [wireframeRed, wireframeGreen, wireFrameBlue];
-
-    const randomIdx = Math.floor(
-      generateNumberBetween(0, materials.length - 1)
-    );
-
-    const randomMat = materials[randomIdx];
+  
+   
+    const randomMat = this.materials[randomIdx];
 
     return randomMat;
   }
 
   _spawnCube() {
     const newCube = new THREE.Mesh(this.randomGeometry, this.randomMaterial);
-    newCube.position.setX(generateNumberBetween(-2, 2));
+    newCube.position.setX(generateRandInt(-2, 2));
    
-    newCube.position.setY(generateNumberBetween(1, 2));
+    newCube.position.setY(generateRandInt(1, 2));
     newCube.position.setZ(-12);
 
     this.activeObjects.add(newCube);

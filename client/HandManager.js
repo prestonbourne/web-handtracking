@@ -12,6 +12,8 @@ class HandManager {
     this.arrowGroup = new THREE.Group();
     this.rayGroup = [];
 
+    this.geometry = new THREE.BoxGeometry(0.2,0.2,0.2);
+    this.material  = new THREE.MeshNormalMaterial();
   }
 
   get _cubesAdded() {
@@ -27,14 +29,10 @@ class HandManager {
       console.warn("Cubes already exist");
       return;
     }
-    const geometry = new THREE.BoxGeometry(0.2,0.2,0.2);
-    const material = new THREE.MeshBasicMaterial({
-      color: "blue",
-      wireframe: true
-    });
+
 
     for (let index = 0; index < 21; index++) {
-      const cube = new THREE.Mesh(geometry, material);
+      const cube = new THREE.Mesh(this.geometry, this.material);
       this.cubes.push(cube);
     }
   }
@@ -109,7 +107,7 @@ class HandManager {
       intersects.forEach((intersection) => {
        
         if(intersection.distance <= 0.2){
-          console.log(intersection)
+         
           window.dispatchEvent(new CustomEvent(EVENTS.HAND_COLLIDE , {detail: intersection.object}))
         }
       })

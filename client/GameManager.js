@@ -1,4 +1,4 @@
-import { generateNumberBetween, postData, throttle } from "./utils/helpers";
+import { generateRandInt, postData, throttle } from "./utils/helpers";
 import * as THREE from "three";
 import { uiManager } from "./UIManager";
 import { unitsManager } from "./UnitsManager";
@@ -21,6 +21,7 @@ class GameManager {
     this.isPlaying = false;
 
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color("white");
     this.camera = new THREE.PerspectiveCamera(
       120,
       window.innerWidth / window.innerHeight,
@@ -40,6 +41,7 @@ class GameManager {
       canvas: uiManager.$canvas,
     });
 
+   
     this.currTime = Date.now();
 
     this.clock = new THREE.Clock();
@@ -108,6 +110,7 @@ class GameManager {
     this.isPlaying = true;
     unitsManager.start();
     uiManager.init(this.debugMode);
+    this.renderer.autoClearDepth = false
     gameManger.play()
   }
 
@@ -123,7 +126,7 @@ class GameManager {
    
     handManager.render(this.camera, this.scene, true, this.deltaTime);
   
-
+    
     this.renderer.render(this.scene, this.debugCam);
   
 
