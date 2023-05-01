@@ -50,9 +50,11 @@ export const throttle = (callback, delay = 1500) => {
 
 }
 
-export const generateNumberBetween = (min,max) => {
+export const generateRandInt = (min,max) => {
   
   const random = (Math.random() * (max - min + 1) + min);
+ 
+  
 
   if(random > max) return  Math.floor(random);
 
@@ -60,4 +62,9 @@ export const generateNumberBetween = (min,max) => {
 
   return random
 
+}
+
+export const generateRandFloat = (min, max) => {
+  const random = (Math.random() * (max - min + 1) + min);
+  return random;
 }
