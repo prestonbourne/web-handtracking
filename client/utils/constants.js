@@ -6,3 +6,9 @@ export const EVENTS = {
 }
 
 
+export const Sound = {
+ SequenceOrder: {
+  Ascending: 0,
+  Descending: 1,
+ }
+}
