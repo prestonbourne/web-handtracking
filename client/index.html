@@ -4,19 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="./css/main.css" />
     <title>Vite App</title>
   </head>
   <body>
     <p>Hello</p>
     <button id="webcamButton">Toggle</button>
     <button id="ino">Toggle Ino</button>
+    <button id="tone">Allow Music</button>
     <div id="output_container" >
       <video id="webcam" autoplay playsinline></video>
       <canvas class="output_canvas" id="output_canvas"></canvas>
     </div>
+    <main>
+      <div id="score_overlay">
+        <p>Score: <span id="score_count">0</span></p>
+      </div>
+      <canvas id="game_canvas"></canvas>
+    </main>
    
+    
     <script type="module" src="/main.js"></script>
     <script type="module" src="/scene.js"></script>
   </body>
+ 
 </html>

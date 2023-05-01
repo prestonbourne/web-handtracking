@@ -12,7 +12,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", (req, res) => {
   const newStatus = req.body.status;
-  console.log(newStatus)
+
+  
   if (newStatus === true) {
     state.lightStatus = Light.On;
   } else {

@@ -2,9 +2,8 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "deploy:heroku": "cd ../ && git subtree push --prefix server heroku main",
     "start": "node main.js",
     "dev": "nodemon main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,7 +16,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "nodemon": "^2.0.22",
-    "serialport": "^10.5.0"
+    "serialport": "^10.5.0",
+    "socket.io": "^4.6.1"
   },
   "engines": {
     "node": "18.12.1"

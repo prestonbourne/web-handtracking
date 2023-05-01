@@ -95,6 +95,26 @@ p, h1, h2, h3, h4, h5, h6 {
   transform: translateY(1px);
 }
 
+main {
+  position: relative;
+}
+main div {
+  display: none;
+  width: 20%;
+  height: 64px;
+  background-color: plum;
+  border-bottom-right-radius: 16px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+}
+main div p {
+  color: aliceblue;
+  font-size: larger;
+  font-weight: 800;
+  font-style: italic;
+}
+
 #output_container {
   width: 100%;
   position: relative;

@@ -1,8 +1,22 @@
 import handLandmarker from "./landmarker";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { HAND_CONNECTIONS } from "@mediapipe/hands";
-import handModel from "./hand.model";
+import {landmarkStore} from "./LandmarkStore";
 import { debounce, postData, throttle } from "./utils/helpers";
+import { io } from "socket.io-client";
+import { gameManger } from "./GameManager";
+import {soundManager} from "./SoundManager";
+
+
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL
+
+const socket = io(SERVER_BASE_URL, {
+  reconnectionDelayMax: 10000,
+  reconnectionAttempts: 4  
+  
+});
+
+socket.on("connect", () => {console.log('wtd') });
 
 (function main() {
  
@@ -13,12 +27,15 @@ import { debounce, postData, throttle } from "./utils/helpers";
   let webcamRunning = false;
 
   let removeLater = false;
+ 
+  soundManager.backgroundMusic()
 
   const inoButton = document.getElementById("ino");
   inoButton.addEventListener("click", (e) => {
    
     removeLater = !removeLater;
-    postData({ status: removeLater });
+  
+   postData({status: removeLater})
   });
 
   const hasGetUserMedia = !!(
@@ -30,6 +47,7 @@ import { debounce, postData, throttle } from "./utils/helpers";
   if (hasGetUserMedia) {
     enableWebcamButton.addEventListener("click", function enableCam(e) {
    
+
       if (!handLandmarker) {
         console.log("Wait! objectDetector not loaded yet.");
         return;
@@ -56,7 +74,9 @@ import { debounce, postData, throttle } from "./utils/helpers";
         })
         .catch((e) => {
           console.error(e.message);
-        });
+        })
+
+        gameManger.start()
     });
   } else {
     console.warn("getUserMedia() is not supported by your browser");
@@ -74,13 +94,17 @@ import { debounce, postData, throttle } from "./utils/helpers";
 
     const nowInMs = Date.now();
     const results = handLandmarker.detectForVideo(video, nowInMs);
+    
 
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
+    gameManger.play()
+
     if (results.landmarks) {
       for (const landmarks of results.landmarks) {
-        handModel.setLandmarks(landmarks);
+        landmarkStore.landmarks = landmarks;
+       
 
         drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
           color: "#00FF00",

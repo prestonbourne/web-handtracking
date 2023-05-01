@@ -1,6 +1,8 @@
+
+
 export const postData = async (data) => {
   const jsonData = JSON.stringify(data);
-
+ 
   try {
     const res = await fetch("http://localhost:3001/", {
       method: "POST",
@@ -11,10 +13,9 @@ export const postData = async (data) => {
       body: jsonData,
     });
     const data = await res.json();
-    console.log(data);
   } catch (error) {
 
-   console.error(error);
+  // console.error(error);
 
   }
 
@@ -27,19 +28,19 @@ export const postData = async (data) => {
   
   return (...args) => {
     clearTimeout(time);
-    console.log(time)
     time = setTimeout(() => {
       callback(...args);
     }, delay);
   };
 }
 
-export const throttle = (callback, delay = 1500, ...args) => {
+export const throttle = (callback, delay = 1500) => {
 
   let shouldWait = false;
 
 
   return (...args) => {
+    if(shouldWait) return
     callback(...args)
     shouldWait = true;
     setTimeout(() => {
@@ -47,5 +48,16 @@ export const throttle = (callback, delay = 1500, ...args) => {
     }, delay)
   }
 
+}
+
+export const generateNumberBetween = (min,max) => {
+  
+  const random = (Math.random() * (max - min + 1) + min);
+
+  if(random > max) return  Math.floor(random);
+
+  if(random < min) return  Math.ceil(random);
+
+  return random
 
 }
