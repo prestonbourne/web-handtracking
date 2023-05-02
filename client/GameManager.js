@@ -54,9 +54,7 @@ class GameManager {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight - 24);
 
-    //for debug camera
-    const insetWidth = window.innerWidth / 2;
-    const insetHeight = window.innerHeight / 2;
+
 
     this.debugCam.aspect = window.innerWidth / window.innerHeight;
     this.debugCam.updateProjectionMatrix();
