@@ -108,11 +108,11 @@ socket.on("connect", () => {console.log('wtd') });
         landmarkStore.landmarks = landmarks;
        
 
-        drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
-          color: "#00FF00",
-          lineWidth: 5,
-        });
-        drawLandmarks(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
+        // drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
+        //   color: "#00FF00",
+        //   lineWidth: 5,
+        // });
+        // drawLandmarks(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
       }
     }
     canvasCtx.restore();
