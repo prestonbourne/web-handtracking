@@ -1,4 +1,5 @@
 import {HandLandmarker, FilesetResolver} from "@mediapipe/tasks-vision"
+import model from './hand_landmarker.task'
 
 const vision = await FilesetResolver.forVisionTasks(
  // path/to/wasm/root
@@ -8,7 +9,7 @@ const handLandmarker = await HandLandmarker.createFromOptions(
    vision,
    {
      baseOptions: {
-       modelAssetPath: "landmarker/hand_landmarker.task"
+       modelAssetPath: model
      },
      numHands: 1,
      runningMode: "VIDEO"
