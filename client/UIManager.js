@@ -1,12 +1,17 @@
 import Stats from "stats.js";
 
-
-
 class UIManager {
   constructor() {
     this.$canvas = document.getElementById("game_canvas");
-    this.$scoreCountCounter = document.getElementById("score_overlay");
+    this.$scoreCountCounter = document.getElementById("score_container");
     this.$scoreCount = document.getElementById("score_count");
+    this.$debugMode = document.getElementById("debugMode");
+  }
+
+  bindToggleDebugMode(handler) {
+    this.$debugMode.addEventListener("click", (e) => {
+      handler(e);
+    });
   }
 
   /**
@@ -17,25 +22,30 @@ class UIManager {
     this.$scoreCount.innerText = countStr;
   }
 
-  init(debugMode) {
+  init() {
     this.$scoreCountCounter.style.display = "flex";
-    if (debugMode !== true) return;
 
-    this.debugMode = true;
-    this.stats = new Stats();
-    this.stats.showPanel(0);
-    document.body.appendChild(this.stats.dom);
+    
+  }
+
+  handleToggleDebugMode(debugMode) {
+   
+    if (debugMode === true) {
+      this.stats = new Stats();
+      this.stats.showPanel(0);
+      document.body.appendChild(this.stats.dom);
+    } else {
+      document.body.removeChild(this.stats.dom);
+      this.stats = null;
+    }
   }
 
   statsBegin() {
-    if (this.debugMode !== true) return;
-    
     this.stats.begin();
   }
 
   statsEnd() {
-    if (this.debugMode !== true) return;
-    this.stats.end();
+   return this.stats.end();
   }
 }
 

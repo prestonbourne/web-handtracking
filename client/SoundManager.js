@@ -42,7 +42,7 @@ class SoundManager {
     const maxIdx = this._boxSequence.length - 1;
     const minIdx = 0;
    
-    console.log('hey')
+  
   
 
     switch (this._sequenceOrder) {

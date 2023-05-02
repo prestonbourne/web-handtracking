@@ -12,13 +12,10 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 const throttledPostData = throttle((data) => postData(data), 300);
 
 class GameManager {
-  /**
-   * 
-   * @param {boolean} debugMode 
-   */
-  constructor(debugMode) {
-    this.debugMode = debugMode
+  constructor() {
+    this.debugMode = false;
     this.isPlaying = false;
+    
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("white");
@@ -41,7 +38,8 @@ class GameManager {
       canvas: uiManager.$canvas,
     });
 
-   
+    this.axesHelper = new THREE.AxesHelper(5);
+
     this.currTime = Date.now();
 
     this.clock = new THREE.Clock();
@@ -76,6 +74,18 @@ class GameManager {
 
     soundManager.playCollisionSound();
   }
+  _handleToggleDebugMode(e) {
+    this.debugMode = e.target.checked;
+
+    uiManager.handleToggleDebugMode(this.debugMode);
+    if(this.debugMode){
+      
+      this.scene.add(this.axesHelper);
+    }else{
+      this.scene.remove(this.axesHelper)
+    }
+   
+  }
 
   _init() {
     this.renderer.setSize(window.innerWidth, window.innerHeight - 24);
@@ -94,10 +104,10 @@ class GameManager {
     );
 
     window.addEventListener("resize", this.handleResize.bind(this), false);
+    uiManager.bindToggleDebugMode(this._handleToggleDebugMode.bind(this));
 
     //TODO: REMOVE BEFORE FINAL VERISON
-    const axesHelper = new THREE.AxesHelper(5);
-    this.scene.add(axesHelper);
+  
 
     handManager.createCubes();
     this.scene.add(...handManager.cubes);
@@ -109,30 +119,26 @@ class GameManager {
     this._init();
     this.isPlaying = true;
     unitsManager.start();
-    uiManager.init(this.debugMode);
-    this.renderer.autoClearDepth = false
-    gameManger.play()
+    uiManager.init();
+    this.renderer.autoClearDepth = false;
+    gameManger.play();
   }
 
   play() {
-   
-    uiManager.statsBegin()
+    this.debugMode && uiManager.statsBegin();
 
     unitsManager.handleAnimateObjects(this.deltaTime);
     unitsManager._handleRemoveObjects();
     handManager.landmarks = landmarkStore.landmarks;
 
     // renderer.render(scene, camera);
-   
-    handManager.render(this.camera, this.scene, true, this.deltaTime);
-  
-    
-    this.renderer.render(this.scene, this.debugCam);
-  
 
-    uiManager.statsEnd()
+    handManager.render(this.camera, this.debugMode, this.deltaTime);
+
+    this.renderer.render(this.scene, this.debugCam);
+
+    this.debugMode && uiManager.statsEnd();
     window.requestAnimationFrame(this.play.bind(this));
-    
   }
 }
 

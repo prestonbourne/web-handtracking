@@ -9,7 +9,7 @@
   </head>
   <body>
 
-    <button id="webcamButton">Toggle</button>
+    <button id="webcamButton">Start Game</button>
     <button id="ino">Toggle Ino</button>
     <button id="tone">Allow Music</button>
     <div id="output_container" >
@@ -17,15 +17,20 @@
       <canvas class="output_canvas" id="output_canvas"></canvas>
     </div>
     <main>
-      <div id="score_overlay">
+      <div id="game_overlay">
+      <div id="score_container">
         <p>Score: <span id="score_count">0</span></p>
+      </div>
+      <div id="debug_toggle_container">
+        <label for="debugMode">Debug mode</label>
+        <input type="checkbox" id="debugMode" name="debugMode">
+      </div>
       </div>
       <canvas id="game_canvas"></canvas>
     </main>
    
     
     <script type="module" src="/main.js"></script>
-    <script type="module" src="/scene.js"></script>
   </body>
  
 </html>

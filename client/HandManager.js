@@ -6,7 +6,7 @@ import { unitsManager } from "./UnitsManager";
 
 class HandManager {
   constructor() {
-    this.debugMode = false;
+    
     this.cubes = [];
     this.landmarks = [];
     this.arrowGroup = new THREE.Group();
@@ -70,15 +70,19 @@ class HandManager {
   }
 
   _handleArrows() {
+  
     if (this.debugMode === false) {
+      this.arrowGroup.clear();
       return;
     }
 
     if(this.raysAdded === false){
       return
     }
+
+
  
-      this.arrowGroup.clear()
+      this.arrowGroup.clear();
       this.rayGroup.forEach((raycaster) => {
      
         const arrow = new THREE.ArrowHelper(
@@ -140,14 +144,14 @@ class HandManager {
     }
   }
 
-  render(camera, scene, debugMode = false, deltaTime) {
+  render(camera, debugMode, deltaTime) {
   
     if (this._cubesAdded === false) {
       throw new Error("add cubes first. createCubes method");
     }
 
     this.debugMode = debugMode;
-    this._handleRaycasters(scene);
+    this._handleRaycasters();
     this._handleArrows();
     this._handleCollisions();
     this._placeCubesByLandmark(camera, deltaTime)

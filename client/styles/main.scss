@@ -1,28 +1,8 @@
 @use 'reset';
 @use 'webCamButton';
+@use 'game';
 
 
-main {
- position: relative;
- div{
-  display: none;
-  width: 20%;
-  height: 64px;
-  background-color: plum;
-  border-bottom-right-radius: 16px;
-  position: absolute;
-  
-  align-items: center;
-  justify-content: center;
-
-  p{
-   color: aliceblue;
-   font-size: larger;
-   font-weight: 800;
-   font-style: italic;
-  }
- }
-}
 
 #output_container{
  width: 100%;
