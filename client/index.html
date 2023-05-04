@@ -1,36 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="css/main.css"  />
+    <script defer type="module" src="main.js"></script>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/main.css" />
+    
     <title>Vite App</title>
   </head>
   <body>
-
-    <button id="webcamButton">Start Game</button>
+    <div>
+    <button id="test_serial">test serial</button>
     <button id="ino">Toggle Ino</button>
     <button id="tone">Allow Music</button>
-    <div id="output_container" >
-      <video id="webcam" autoplay playsinline></video>
-      <canvas class="output_canvas" id="output_canvas"></canvas>
-    </div>
+  </div>
     <main>
+  
       <div id="game_overlay">
+        <button id="start_game_button">Start Game</button>
+        <div id="output_container" >
+          <video id="webcam" autoplay playsinline></video>
+          <canvas class="output_canvas" id="output_canvas"></canvas>
+        </div>
       <div id="score_container">
         <p>Score: <span id="score_count">0</span></p>
       </div>
-      <div id="debug_toggle_container">
+      <section id="debug_toggle_container">
         <label for="debugMode">Debug mode</label>
         <input type="checkbox" id="debugMode" name="debugMode">
+
+      <div id="info-box">
+        <button>Info</button>
+        <div>
+        <p>
+        Video from your webcam will not be stored✌🏽
+        </p>
+        <a target="_blank" href="https://github.com/Saintpreston/web-handtracking">
+        Github
+        </a>
       </div>
+      </div>
+     
       </div>
       <canvas id="game_canvas"></canvas>
     </main>
    
     
-    <script type="module" src="/main.js"></script>
+    
   </body>
  
 </html>

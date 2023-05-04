@@ -5,7 +5,6 @@ const http = require("http");
 const { Server } = require("socket.io");
 const routes = require("./routes.js");
 const dotenv = require("dotenv");
-const serialComm = require("./serialComm.js");
 
 (async function main() {
   const port = 443;
@@ -13,25 +12,32 @@ const serialComm = require("./serialComm.js");
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(express.static("public"));
   app.use(express.json());
-  app.use(cors());
+
+  app.use(cors({ origin: true }));
   app.use("/", routes);
 
   const server = http.createServer(app);
 
- server.listen(port)
-  
+  server.listen(port, () => {
+    console.log("running on port " + port);
+  });
+
   const io = new Server(server, {
     cors: {
       origin: "*",
     },
   });
 
- 
 
-  io.on("connection", (socket) => {
-    console.log("hey", socket);
-    socket.send("fuck z")
-  });
+  
 
-  //serialComm();
+  io.on('connection', socket => {
+    socket.on('message', (data) => {
+      console.log(data)
+      io.emit('finger_coords', data)
+    })
+
+    
+  })
+
 })();

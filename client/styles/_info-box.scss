@@ -1,0 +1,72 @@
+#info-box{
+
+ 
+
+ background-color: rgb(42, 42, 42);
+ font-size: 12px;
+ font-weight: 500;
+ pointer-events: auto;
+ outline: none;
+ transition: 0.6s;
+ opacity: 0.8;
+
+ border-radius: 4px;
+ overflow: hidden;
+
+ div{
+  opacity: 1;
+  display: none;
+  padding: 0.5rem 1rem;
+  background-color: inherit;
+  max-height: 0;
+ overflow-wrap: break-word;
+  transition: max-height 0.2s ease-out;
+  text-align: left;
+
+   p{
+    color: white;
+   }
+ }
+
+ 
+
+
+
+ button {
+  color: white;
+  cursor: pointer;
+  background-color: inherit;
+  border: inherit;
+  border-bottom: 1px solid gray;
+  width: 100%;
+  text-align: start;
+  transition: cubic-bezier(0.55, 0.085, 0.68, 0.53) 220ms;
+
+ 
+ }
+ button:hover{
+  background-color: rgb(0, 0, 0);
+ }
+
+ button:after {
+  content: '\2795'; /* Unicode character for "plus" sign (+) */
+ font-weight: 700;
+
+  float: right;
+  margin-left: 1rem;
+ }
+ 
+ button.open:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+ } 
+
+ a{
+  color: white;
+ }
+
+ a:visited{
+  color: aqua;
+ }
+ 
+}
+

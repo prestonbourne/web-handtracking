@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -52,56 +53,15 @@ p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 
-#webcamButton {
-  align-items: center;
-  appearance: none;
-  background-color: #FCFCFD;
-  border-radius: 4px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px, rgba(45, 35, 66, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #36395A;
-  cursor: pointer;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding: 16px 16px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: box-shadow 0.15s, transform 0.15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow, transform;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-#webcamButton:focus {
-  outline: blue solid 2px;
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
-#webcamButton:hover {
-  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  transform: translateY(-1px);
-}
-
-#webcamButton:active {
-  box-shadow: #D6D6E7 0 3px 7px inset;
-  transform: translateY(1px);
-}
-
 main {
   position: relative;
   height: 100%;
+  background-color: 0;
 }
 main #game_overlay {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   position: absolute;
   pointer-events: none;
 }
@@ -126,25 +86,130 @@ main #game_overlay #debug_toggle_container {
   pointer-events: none;
   bottom: 0;
   right: 0;
-  background-color: aquamarine;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  width: 12rem;
+  text-align: right;
+  font-size: small;
 }
 main #game_overlay #debug_toggle_container input, main #game_overlay #debug_toggle_container label {
   pointer-events: all;
 }
 
 #output_container {
-  width: 100%;
-  position: relative;
-  display: block;
-  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 360px;
+  height: 240px;
+  pointer-events: auto;
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 #output_container video {
   position: absolute;
-  width: 100%;
-  height: auto;
 }
-#output_container canvas {
-  position: absolute;
+#output_container #output_canvas {
   width: 100%;
-  height: auto;
+  height: 100%;
+  position: absolute;
+}
+
+#start_game_button {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px, rgba(45, 35, 66, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  pointer-events: auto;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding: 16px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#start_game_button:focus {
+  outline: blue solid 2px;
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+#start_game_button:hover {
+  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-1px);
+}
+
+#start_game_button:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(1px);
+}
+
+#info-box {
+  background-color: rgb(42, 42, 42);
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: auto;
+  outline: none;
+  transition: 0.6s;
+  opacity: 0.8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+#info-box div {
+  opacity: 1;
+  display: none;
+  padding: 0.5rem 1rem;
+  background-color: inherit;
+  max-height: 0;
+  overflow-wrap: break-word;
+  transition: max-height 0.2s ease-out;
+  text-align: left;
+}
+#info-box div p {
+  color: white;
+}
+#info-box button {
+  color: white;
+  cursor: pointer;
+  background-color: inherit;
+  border: inherit;
+  border-bottom: 1px solid gray;
+  width: 100%;
+  text-align: start;
+  transition: cubic-bezier(0.55, 0.085, 0.68, 0.53) 220ms;
+}
+#info-box button:hover {
+  background-color: rgb(0, 0, 0);
+}
+#info-box button:after {
+  content: "➕"; /* Unicode character for "plus" sign (+) */
+  font-weight: 700;
+  float: right;
+  margin-left: 1rem;
+}
+#info-box button.open:after {
+  content: "➖"; /* Unicode character for "minus" sign (-) */
+}
+#info-box a {
+  color: white;
+}
+#info-box a:visited {
+  color: aqua;
 }/*# sourceMappingURL=main.css.map */

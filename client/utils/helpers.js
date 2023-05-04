@@ -1,5 +1,27 @@
 
 
+export const postSerialMessage = async (data) => {
+  const jsonData = JSON.stringify(data);
+ 
+  try {
+    const res = await fetch("https://localhost:3000", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
+    });
+    console.log(res)
+  } catch (error) {
+
+   console.error(error);
+
+  }
+
+ 
+};
+
 export const postData = async (data) => {
   const jsonData = JSON.stringify(data);
  
@@ -12,7 +34,7 @@ export const postData = async (data) => {
       },
       body: jsonData,
     });
-    const data = await res.json();
+    
   } catch (error) {
 
   // console.error(error);

@@ -8,10 +8,11 @@ import { EVENTS } from "./utils/constants";
 import { handManager } from "./HandManager";
 import { soundManager } from "./SoundManager";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import socket from "./socket";
 
 const throttledPostData = throttle((data) => postData(data), 300);
 
-class GameManager {
+export class GameManager {
   constructor() {
     this.debugMode = false;
     this.isPlaying = false;
@@ -43,22 +44,16 @@ class GameManager {
     this.currTime = Date.now();
 
     this.clock = new THREE.Clock();
+    
+
+ 
   }
 
   get deltaTime() {
     return this.clock.getDelta();
   }
 
-  handleResize() {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight - 24);
 
-
-
-    this.debugCam.aspect = window.innerWidth / window.innerHeight;
-    this.debugCam.updateProjectionMatrix();
-  }
 
   postData = throttledPostData;
 
@@ -85,25 +80,36 @@ class GameManager {
    
   }
 
-  _init() {
-    this.renderer.setSize(window.innerWidth, window.innerHeight - 24);
-    this.debugCam.position.set(0, 6, 6);
+  init() {
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.debugCam.position.set(0, 0 , 8);
     this.debugCam.lookAt(0, 0, 0);
     this.scene.add(this.debugCam);
 
     this.camera.position.z = 3;
     this.scene.add(this.camera);
 
-    const controls = new OrbitControls(this.debugCam, this.renderer.domElement);
+   // const controls = new OrbitControls(this.debugCam, this.renderer.domElement);
 
     window.addEventListener(
       EVENTS.HAND_COLLIDE,
       this.handleCollision.bind(this)
     );
 
-    window.addEventListener("resize", this.handleResize.bind(this), false);
-    uiManager.bindToggleDebugMode(this._handleToggleDebugMode.bind(this));
+    function handleResize() {
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, window.innerHeight - 24);
+  
+  
+  
+      this.debugCam.aspect = window.innerWidth / window.innerHeight;
+      this.debugCam.updateProjectionMatrix();
+    }
 
+    window.addEventListener("resize", handleResize.bind(this), false);
+    uiManager.bindToggleDebugMode(this._handleToggleDebugMode.bind(this));
+  
     //TODO: REMOVE BEFORE FINAL VERISON
   
 
@@ -111,33 +117,35 @@ class GameManager {
     this.scene.add(...handManager.cubes);
     this.scene.add(handManager.arrowGroup);
     this.scene.add(unitsManager.activeObjects);
+    uiManager.bindEnableCam(this._start.bind(this))  
   }
 
-  start() {
-    this._init();
-    this.isPlaying = true;
+  _start() {
+  
+    uiManager.init()
     unitsManager.start();
-    uiManager.init();
     this.renderer.autoClearDepth = false;
-    gameManger.play();
+    this.isPlaying = true;
+    this._play()
   }
 
-  play() {
+  _play() {
+  
     this.debugMode && uiManager.statsBegin();
-
+   
+    socket.send(handManager.indexFingertip)
     unitsManager.handleAnimateObjects(this.deltaTime);
     unitsManager._handleRemoveObjects();
     handManager.landmarks = landmarkStore.landmarks;
 
-    // renderer.render(scene, camera);
 
     handManager.render(this.camera, this.debugMode, this.deltaTime);
 
     this.renderer.render(this.scene, this.debugCam);
 
     this.debugMode && uiManager.statsEnd();
-    window.requestAnimationFrame(this.play.bind(this));
+    window.requestAnimationFrame(this._play.bind(this));
   }
 }
 
-export const gameManger = new GameManager();
+export const gameManger = new GameManager()

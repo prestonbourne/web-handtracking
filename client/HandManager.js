@@ -1,19 +1,25 @@
 import { EVENTS } from "./utils/constants";
 import { gameManger } from "./GameManager";
-import {landmarkStore} from "./LandmarkStore";
+import { landmarkStore } from "./LandmarkStore";
 import * as THREE from "three";
 import { unitsManager } from "./UnitsManager";
 
 class HandManager {
   constructor() {
-    
     this.cubes = [];
     this.landmarks = [];
     this.arrowGroup = new THREE.Group();
     this.rayGroup = [];
 
-    this.geometry = new THREE.BoxGeometry(0.2,0.2,0.2);
-    this.material  = new THREE.MeshNormalMaterial();
+    this.geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+    this.material = new THREE.MeshBasicMaterial({
+      color: "black",
+    });
+    //this.material  = new THREE.MeshNormalMaterial();
+  }
+
+  get indexFingertip() {
+    return this.cubes[9].position.x;
   }
 
   get _cubesAdded() {
@@ -30,19 +36,17 @@ class HandManager {
       return;
     }
 
-
     for (let index = 0; index < 21; index++) {
       const cube = new THREE.Mesh(this.geometry, this.material);
       this.cubes.push(cube);
     }
   }
 
-
   _updateLandsMarks() {
     const handle = () => {
       this.landmarks = landmarkStore.landmarks;
     };
-    
+
     handle.bind(this);
     window.addEventListener(EVENTS.LANDMARKS_UPDATE, handle);
   }
@@ -53,8 +57,8 @@ class HandManager {
     if (!this.raysAdded) {
       this.cubes.forEach((cube) => {
         const raycaster = new THREE.Raycaster();
-       raycaster.set(cube.position, new THREE.Vector3(0, 0, -1).normalize());
-  
+        raycaster.set(cube.position, new THREE.Vector3(0, 0, -1).normalize());
+
         this.rayGroup.push(raycaster);
       });
     } else {
@@ -63,89 +67,75 @@ class HandManager {
           this.cubes[index].position,
           new THREE.Vector3(0, 0, -1).normalize()
         );
-
-        
       }
     }
   }
 
   _handleArrows() {
-  
     if (this.debugMode === false) {
       this.arrowGroup.clear();
       return;
     }
 
-    if(this.raysAdded === false){
-      return
+    if (this.raysAdded === false) {
+      return;
     }
 
-
- 
-      this.arrowGroup.clear();
-      this.rayGroup.forEach((raycaster) => {
-     
-        const arrow = new THREE.ArrowHelper(
-          raycaster.ray.direction,
-          raycaster.ray.origin,
-          300,
-          0xff0000
-        );
-        this.arrowGroup.add(arrow);
-      });
-
-
+    this.arrowGroup.clear();
+    this.rayGroup.forEach((raycaster) => {
+      const arrow = new THREE.ArrowHelper(
+        raycaster.ray.direction,
+        raycaster.ray.origin,
+        300,
+        0xff0000
+      );
+      this.arrowGroup.add(arrow);
+    });
   }
-
 
   _handleCollisions() {
     if (!this._cubesAdded && !this.raysAdded) return;
-    if(!gameManger.isPlaying) return
-    
-    let intersectionsExist = false
+    if (!gameManger.isPlaying) return;
+
+    let intersectionsExist = false;
     this.rayGroup.forEach((ray) => {
-     
-      const intersects = ray.intersectObjects(unitsManager.activeObjects.children);
-      
-    
+      const intersects = ray.intersectObjects(
+        unitsManager.activeObjects.children
+      );
+
       intersects.forEach((intersection) => {
-       
-        if(intersection.distance <= 0.2){
-         
-          window.dispatchEvent(new CustomEvent(EVENTS.HAND_COLLIDE , {detail: intersection.object}))
+        if (intersection.distance <= 0.2) {
+          window.dispatchEvent(
+            new CustomEvent(EVENTS.HAND_COLLIDE, {
+              detail: intersection.object,
+            })
+          );
         }
-      })
-       
-     
+      });
     });
-
-
   }
 
-  _placeCubesByLandmark(camera, deltaTime){
+  _placeCubesByLandmark(camera) {
     for (let index = 0; index < this.landmarks.length; index++) {
       const currLndmrk = this.landmarks[index];
 
       const vector = new THREE.Vector3(
         currLndmrk.x * 2 - 1,
         -currLndmrk.y * 2 + 1,
-        currLndmrk.z * 10 
+        currLndmrk.z * 10
       ).unproject(camera);
 
-       
-    
       const dir = vector.sub(camera.position).normalize();
       dir.setX(-dir.x);
-       const distance = -camera.position.z / dir.z; //<- leave comment, this maps hands z coordinate to cameras z coordinate
-       const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-       
-       this.cubes[index].position.copy(pos);
-      this.cubes[index].rotation.x = Math.PI
+      const distance = -camera.position.z / dir.z; //<- leave comment, this maps hands z coordinate to cameras z coordinate
+      const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+
+      this.cubes[index].position.copy(pos);
+      this.cubes[index].rotation.x = Math.PI;
     }
   }
 
   render(camera, debugMode, deltaTime) {
-  
     if (this._cubesAdded === false) {
       throw new Error("add cubes first. createCubes method");
     }
@@ -154,11 +144,8 @@ class HandManager {
     this._handleRaycasters();
     this._handleArrows();
     this._handleCollisions();
-    this._placeCubesByLandmark(camera, deltaTime)
-
+    this._placeCubesByLandmark(camera, deltaTime);
   }
 }
 
 export const handManager = new HandManager();
-
-
