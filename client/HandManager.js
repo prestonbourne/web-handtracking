@@ -97,7 +97,7 @@ class HandManager {
     if (!this._cubesAdded && !this.raysAdded) return;
     if (!gameManger.isPlaying) return;
 
-    let intersectionsExist = false;
+  
     this.rayGroup.forEach((ray) => {
       const intersects = ray.intersectObjects(
         unitsManager.activeObjects.children
