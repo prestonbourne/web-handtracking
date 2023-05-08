@@ -48,6 +48,10 @@ main {
    text-align: right;
    font-size: small;
 
+   label{
+    color: white;
+   }
+   
    input, label {
     pointer-events: all;
    }

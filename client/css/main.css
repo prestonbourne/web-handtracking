@@ -97,6 +97,9 @@ main #game_overlay #debug_toggle_container {
   text-align: right;
   font-size: small;
 }
+main #game_overlay #debug_toggle_container label {
+  color: white;
+}
 main #game_overlay #debug_toggle_container input, main #game_overlay #debug_toggle_container label {
   pointer-events: all;
 }
