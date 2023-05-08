@@ -15,8 +15,17 @@ export class GameManager {
   constructor() {
     this.debugMode = false;
     this.isPlaying = false;
+
     
     const texture = new THREE.CubeTextureLoader().load(Assets.SkyboxCubeMap);
+
+    this.lights = {
+      ambient: new THREE.AmbientLight(0xffffff, 0.6),
+      point: new THREE.PointLight()
+    }
+
+    this.lights.point.position.set(2,3,4);
+
    
     this.scene = new THREE.Scene();
     this.scene.background = texture;
@@ -84,7 +93,7 @@ export class GameManager {
     this.debugCam.position.set(0, 0 , 8);
     this.debugCam.lookAt(0, 0, 0);
     this.scene.add(this.debugCam);
-
+    this.scene.add(...Object.values(this.lights))
     this.camera.position.z = 3;
     this.scene.add(this.camera);
 

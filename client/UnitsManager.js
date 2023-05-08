@@ -11,14 +11,14 @@ class UnitsManager {
 
    _createMaterials(){
 
-   const wireframeRed = new THREE.MeshBasicMaterial({
+   const wireframeRed = new THREE.MeshLambertMaterial({
     color: "red",
   });
-  const wireframeGreen = new THREE.MeshBasicMaterial({
+  const wireframeGreen = new THREE.MeshLambertMaterial({
     color: "green",
   });
 
-  const wireFrameBlue = new THREE.MeshBasicMaterial({
+  const wireFrameBlue = new THREE.MeshLambertMaterial({
     color: "blue",
   });
 
