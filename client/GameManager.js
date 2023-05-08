@@ -4,7 +4,7 @@ import { uiManager } from "./UIManager";
 import { unitsManager } from "./UnitsManager";
 import { scoreManager } from "./ScoreManager";
 import { landmarkStore } from "./LandmarkStore";
-import { EVENTS } from "./utils/constants";
+import { Events } from "./utils/constants";
 import { handManager } from "./HandManager";
 import { soundManager } from "./SoundManager";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -92,7 +92,7 @@ export class GameManager {
    // const controls = new OrbitControls(this.debugCam, this.renderer.domElement);
 
     window.addEventListener(
-      EVENTS.HAND_COLLIDE,
+      Events.HandCollision,
       this.handleCollision.bind(this)
     );
 

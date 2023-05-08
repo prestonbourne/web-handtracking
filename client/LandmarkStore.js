@@ -1,4 +1,4 @@
-import { EVENTS } from "./utils/constants";
+import { Events } from "./utils/constants";
 
 /**
  * @typedef Landmark
@@ -20,7 +20,7 @@ class LandmarkStore {
    */
   set landmarks(landmarks) {
     this._landmarks = landmarks;
-    window.dispatchEvent(new Event(EVENTS.LANDMARKS_UPDATE));
+    window.dispatchEvent(new Event(Events.LandmarksUpdate));
   }
 
   get landmarks(){

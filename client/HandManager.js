@@ -1,4 +1,4 @@
-import { EVENTS } from "./utils/constants";
+import { Events } from "./utils/constants";
 import { gameManger } from "./GameManager";
 import { landmarkStore } from "./LandmarkStore";
 import * as THREE from "three";
@@ -48,7 +48,7 @@ class HandManager {
     };
 
     handle.bind(this);
-    window.addEventListener(EVENTS.LANDMARKS_UPDATE, handle);
+    window.addEventListener(Events.LandmarksUpdate, handle);
   }
 
   _handleRaycasters() {
@@ -106,7 +106,7 @@ class HandManager {
       intersects.forEach((intersection) => {
         if (intersection.distance <= 0.2) {
           window.dispatchEvent(
-            new CustomEvent(EVENTS.HAND_COLLIDE, {
+            new CustomEvent(Events.HandCollision, {
               detail: intersection.object,
             })
           );
