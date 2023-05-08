@@ -1,4 +1,3 @@
-import { generateRandInt, postData, throttle } from "./utils/helpers";
 import * as THREE from "three";
 import { uiManager } from "./UIManager";
 import { unitsManager } from "./UnitsManager";
@@ -10,7 +9,7 @@ import { soundManager } from "./SoundManager";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import socket from "./socket";
 
-const throttledPostData = throttle((data) => postData(data), 300);
+
 
 export class GameManager {
   constructor() {
@@ -55,7 +54,6 @@ export class GameManager {
 
 
 
-  postData = throttledPostData;
 
   handleCollision(e) {
     scoreManager.increment();
