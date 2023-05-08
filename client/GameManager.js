@@ -3,7 +3,7 @@ import { uiManager } from "./UIManager";
 import { unitsManager } from "./UnitsManager";
 import { scoreManager } from "./ScoreManager";
 import { landmarkStore } from "./LandmarkStore";
-import { Events } from "./utils/constants";
+import { Assets, Events } from "./utils/constants";
 import { handManager } from "./HandManager";
 import { soundManager } from "./SoundManager";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -16,9 +16,10 @@ export class GameManager {
     this.debugMode = false;
     this.isPlaying = false;
     
-
+    const texture = new THREE.CubeTextureLoader().load(Assets.SkyboxCubeMap);
+   
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color("white");
+    this.scene.background = texture;
     this.camera = new THREE.PerspectiveCamera(
       120,
       window.innerWidth / window.innerHeight,
@@ -87,7 +88,7 @@ export class GameManager {
     this.camera.position.z = 3;
     this.scene.add(this.camera);
 
-   // const controls = new OrbitControls(this.debugCam, this.renderer.domElement);
+  // const controls = new OrbitControls(this.debugCam, this.renderer.domElement);
 
     window.addEventListener(
       Events.HandCollision,
