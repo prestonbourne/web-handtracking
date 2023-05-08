@@ -11,9 +11,7 @@ class HandManager {
     this.rayGroup = [];
 
     this.geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-    this.material = new THREE.MeshBasicMaterial({
-      color: "black",
-    });
+    this.material = new THREE.MeshNormalMaterial()
 
     this.handMesh = new THREE.InstancedMesh(this.geometry, this.material, 21);
   }
