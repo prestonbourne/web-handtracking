@@ -82,7 +82,7 @@ class UIManager {
 
         //TODO: Find out why these dont work in PROD
         const drawingUtils = !!(drawConnectors && drawLandmarks)
-        console.log(drawingUtils)
+        
         if(drawingUtils){
           drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
             color: "#00FF00",
