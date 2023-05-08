@@ -113,7 +113,7 @@ export class GameManager {
     //TODO: REMOVE BEFORE FINAL VERISON
   
 
-    handManager.createCubes();
+  
     this.scene.add(handManager.handMesh);
     this.scene.add(handManager.arrowGroup);
     this.scene.add(unitsManager.activeObjects);
@@ -135,11 +135,11 @@ export class GameManager {
     this.renderer.render(this.scene, this.debugCam);
     socket.send(handManager.indexFingertip)
     unitsManager.handleAnimateObjects(this.deltaTime);
-    unitsManager._handleRemoveObjects();
+    unitsManager.handleRemoveObjects();
     handManager.landmarks = landmarkStore.landmarks;
 
 
-    handManager.render(this.camera, this.debugMode, this.deltaTime);
+    handManager.render(this.camera, this.debugMode);
 
     
 
