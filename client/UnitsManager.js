@@ -85,7 +85,7 @@ class UnitsManager {
     setInterval(this._spawnCube.bind(this), 2400);
   }
 
-  _handleRemoveObjects() {
+  handleRemoveObjects() {
     this.activeObjects.children.forEach((obj) => {
       if (obj.position.z >= 8) {
         this.activeObjects.remove(obj);

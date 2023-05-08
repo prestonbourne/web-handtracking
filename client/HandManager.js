@@ -6,7 +6,6 @@ import { unitsManager } from "./UnitsManager";
 
 class HandManager {
   constructor() {
-    this.cubes = [];
     this.landmarks = [];
     this.arrowGroup = new THREE.Group();
     this.rayGroup = [];
@@ -17,7 +16,6 @@ class HandManager {
     });
 
     this.handMesh = new THREE.InstancedMesh(this.geometry, this.material, 21);
-    //this.material  = new THREE.MeshNormalMaterial();
   }
 
   getPositionAt(index) {
@@ -27,27 +25,12 @@ class HandManager {
   }
 
   get indexFingertip() {
-    return this.cubes[9].position.x;
-  }
-
-  get _cubesAdded() {
-    return this.cubes.length === 21;
+    const indexPosition = this.getPositionAt(9);
+    return indexPosition;
   }
 
   get raysAdded() {
     return this.rayGroup.length === 21;
-  }
-
-  createCubes() {
-    if (this._cubesAdded === true) {
-      console.warn("Cubes already exist");
-      return;
-    }
-
-    for (let index = 0; index < 21; index++) {
-      const cube = new THREE.Mesh(this.geometry, this.material);
-      this.cubes.push(cube);
-    }
   }
 
   _updateLandsMarks() {
@@ -55,20 +38,17 @@ class HandManager {
       this.landmarks = landmarkStore.landmarks;
     };
 
-    handle.bind(this);
-    window.addEventListener(Events.LandmarksUpdate, handle);
+    window.addEventListener(Events.LandmarksUpdate, handle.bind(this));
   }
 
   _handleRaycasters() {
-    if (!this._cubesAdded) return;
-
     if (!this.raysAdded) {
-      this.cubes.forEach((cube) => {
+      for (let index = 0; index < this.landmarks.length; index++) {
         const raycaster = new THREE.Raycaster();
-        raycaster.set(cube.position, new THREE.Vector3(0, 0, -1).normalize());
-
+        const position = this.getPositionAt(index);
+        raycaster.set(position, new THREE.Vector3(0, 0, -1).normalize());
         this.rayGroup.push(raycaster);
-      });
+      }
     } else {
       for (let index = 0; index < this.rayGroup.length; index++) {
         const position = this.getPositionAt(index);
@@ -104,7 +84,7 @@ class HandManager {
   }
 
   _handleCollisions() {
-    if (!this._cubesAdded && !this.raysAdded) return;
+    if (!this.raysAdded) return;
     if (!gameManger.isPlaying) return;
 
     this.rayGroup.forEach((ray) => {
@@ -161,14 +141,10 @@ class HandManager {
     }
   }
 
-  render(camera, debugMode, deltaTime) {
-    if (this._cubesAdded === false) {
-      throw new Error("add cubes first. createCubes method");
-    }
-
+  render(camera, debugMode) {
     this.debugMode = debugMode;
 
-    this._placeCubesByLandmark(camera, deltaTime);
+    this._placeCubesByLandmark(camera);
     this._handleCollisions();
     this._handleRaycasters();
     this._handleArrows();
