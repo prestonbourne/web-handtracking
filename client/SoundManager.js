@@ -17,17 +17,6 @@ class SoundManager {
     const now = Tone.now();
     synth.triggerAttackRelease("C4", "8n", now);
   }
-  backgroundMusic() {
-    document.getElementById("tone").addEventListener("click", () => {
-    
-      const synth = new Tone.Synth().toDestination();
-      const now = Tone.now();
-      synth.triggerAttackRelease("C4", "8n", now);
-      synth.triggerAttackRelease("E4", "8n", now + 0.5);
-      synth.triggerAttackRelease("G4", "8n", now + 1);
-
-    });
-  }
 
   playCollisionSound() {
     const synth = new Tone.PolySynth(Tone.Synth).toDestination();
@@ -41,9 +30,6 @@ class SoundManager {
   get currNoteIdx() {
     const maxIdx = this._boxSequence.length - 1;
     const minIdx = 0;
-   
-  
-  
 
     switch (this._sequenceOrder) {
       case Sound.SequenceOrder.Ascending:
@@ -65,7 +51,7 @@ class SoundManager {
         }
         break;
     }
-   
+
     return this._currNoteIdx;
   }
 }

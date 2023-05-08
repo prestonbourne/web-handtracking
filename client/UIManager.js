@@ -10,7 +10,7 @@ class UIManager {
     this.$scoreContainer = document.getElementById("score_container");
     this.$scoreCount = document.getElementById("score_count");
     this.$debugMode = document.getElementById("debugMode");
-    this.$testSerial = document.getElementById("test_serial");
+   
     this.$startGameButton = document.getElementById("start_game_button");
     this.$video = document.getElementById("webcam");
     this.$videoOutputContainer = document.getElementById("output_container");
