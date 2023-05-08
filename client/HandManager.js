@@ -15,7 +15,15 @@ class HandManager {
     this.material = new THREE.MeshBasicMaterial({
       color: "black",
     });
+
+    this.handMesh = new THREE.InstancedMesh(this.geometry, this.material, 21);
     //this.material  = new THREE.MeshNormalMaterial();
+  }
+
+  getPositionAt(index) {
+    const matrix = new THREE.Matrix4();
+    this.handMesh.getMatrixAt(index, matrix);
+    return new THREE.Vector3().setFromMatrixPosition(matrix);
   }
 
   get indexFingertip() {
@@ -63,8 +71,10 @@ class HandManager {
       });
     } else {
       for (let index = 0; index < this.rayGroup.length; index++) {
+        const position = this.getPositionAt(index);
+
         this.rayGroup[index].set(
-          this.cubes[index].position,
+          position,
           new THREE.Vector3(0, 0, -1).normalize()
         );
       }
@@ -97,7 +107,6 @@ class HandManager {
     if (!this._cubesAdded && !this.raysAdded) return;
     if (!gameManger.isPlaying) return;
 
-  
     this.rayGroup.forEach((ray) => {
       const intersects = ray.intersectObjects(
         unitsManager.activeObjects.children
@@ -122,7 +131,7 @@ class HandManager {
       const vector = new THREE.Vector3(
         currLndmrk.x * 2 - 1,
         -currLndmrk.y * 2 + 1,
-        currLndmrk.z * 10
+        currLndmrk.z
       ).unproject(camera);
 
       const dir = vector.sub(camera.position).normalize();
@@ -130,8 +139,25 @@ class HandManager {
       const distance = -camera.position.z / dir.z; //<- leave comment, this maps hands z coordinate to cameras z coordinate
       const pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
-      this.cubes[index].position.copy(pos);
-      this.cubes[index].rotation.x = Math.PI;
+      const quaternion = new THREE.Quaternion();
+      /* Swap this with the other setFromEuler for cool effect 
+     quaternion.setFromEuler(
+       new THREE.Euler(
+         (Math.random() - 0.5) * Math.PI * 2,
+         (Math.random() - 0.5) * Math.PI * 2,
+         0
+        )
+     );
+      */
+
+      quaternion.setFromEuler(new THREE.Euler());
+
+      const matrix = new THREE.Matrix4();
+      matrix.makeRotationFromQuaternion(quaternion);
+      matrix.setPosition(pos);
+
+      this.handMesh.setMatrixAt(index, matrix);
+      this.handMesh.instanceMatrix.needsUpdate = true;
     }
   }
 
@@ -141,10 +167,11 @@ class HandManager {
     }
 
     this.debugMode = debugMode;
+
+    this._placeCubesByLandmark(camera, deltaTime);
+    this._handleCollisions();
     this._handleRaycasters();
     this._handleArrows();
-    this._handleCollisions();
-    this._placeCubesByLandmark(camera, deltaTime);
   }
 }
 

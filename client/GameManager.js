@@ -114,7 +114,7 @@ export class GameManager {
   
 
     handManager.createCubes();
-    this.scene.add(...handManager.cubes);
+    this.scene.add(handManager.handMesh);
     this.scene.add(handManager.arrowGroup);
     this.scene.add(unitsManager.activeObjects);
     uiManager.bindEnableCam(this._start.bind(this))  
@@ -132,7 +132,7 @@ export class GameManager {
   _play() {
   
     this.debugMode && uiManager.statsBegin();
-   
+    this.renderer.render(this.scene, this.debugCam);
     socket.send(handManager.indexFingertip)
     unitsManager.handleAnimateObjects(this.deltaTime);
     unitsManager._handleRemoveObjects();
@@ -141,7 +141,7 @@ export class GameManager {
 
     handManager.render(this.camera, this.debugMode, this.deltaTime);
 
-    this.renderer.render(this.scene, this.debugCam);
+    
 
     this.debugMode && uiManager.statsEnd();
     window.requestAnimationFrame(this._play.bind(this));
