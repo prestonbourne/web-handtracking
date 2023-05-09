@@ -70,6 +70,8 @@ main #game_overlay {
 }
 main #game_overlay #score_container {
   align-self: flex-start;
+  top: 0;
+  left: 0;
   justify-self: start;
   display: none;
   width: 20%;
