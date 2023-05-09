@@ -4,6 +4,7 @@ import nz from '../assets/skybox/nz.png'
 import px from '../assets/skybox/px.png'
 import py from '../assets/skybox/py.png'
 import pz from '../assets/skybox/pz.png'
+import soundwave from "../assets/models/GameTitle1.glb"
 
 
 export const Events = {
@@ -20,6 +21,7 @@ export const Sound = {
 }
 
 export const Assets = {
- SkyboxCubeMap: [px, nx, py, ny, pz, nz]
+ SkyboxCubeMap: [px, nx, py, ny, pz, nz],
+ GameTitleGLB: soundwave
 }
 

@@ -8,6 +8,7 @@ import { handManager } from "./HandManager";
 import { soundManager } from "./SoundManager";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import socket from "./socket";
+import { environment } from "./EnvironmentManager";
 
 
 
@@ -19,14 +20,8 @@ export class GameManager {
     
     const texture = new THREE.CubeTextureLoader().load(Assets.SkyboxCubeMap);
 
-    this.lights = {
-      ambient: new THREE.AmbientLight(0xffffff, 0.6),
-      point: new THREE.PointLight()
-    }
 
-    this.lights.point.position.set(2,3,4);
 
-   
     this.scene = new THREE.Scene();
     this.scene.background = texture;
     this.camera = new THREE.PerspectiveCamera(
@@ -55,6 +50,7 @@ export class GameManager {
     this.clock = new THREE.Clock();
     
 
+    
  
   }
 
@@ -93,7 +89,8 @@ export class GameManager {
     this.debugCam.position.set(0, 0 , 8);
     this.debugCam.lookAt(0, 0, 0);
     this.scene.add(this.debugCam);
-    this.scene.add(...Object.values(this.lights))
+    this.scene.add(...environment.lights);
+    this.scene.add(environment.titleMesh)
     this.camera.position.z = 3;
     this.scene.add(this.camera);
 
