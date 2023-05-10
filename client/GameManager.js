@@ -74,7 +74,7 @@ export class GameManager {
 
     //TODO: Animation when object is destroyed???
 
-    //soundManager.playCollisionSound();
+    soundManager.playCollisionSound();
   }
   _handleToggleDebugMode(e) {
     this.debugMode = e.target.checked;

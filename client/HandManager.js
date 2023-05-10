@@ -92,7 +92,7 @@ class HandManager {
       );
 
       intersects.forEach((intersection) => {
-        if (intersection.distance <= 1) {
+        if (intersection.distance <= 4) {
           window.dispatchEvent(
             new CustomEvent(Events.HandCollision, {
               detail: intersection.object,

@@ -6,7 +6,7 @@ import py from '../assets/skybox/py.png'
 import pz from '../assets/skybox/pz.png'
 import soundwave from "../assets/models/GameTitle1.glb"
 import environment from "../assets/models/env/FinalSkyBox.fbx"
-import backgroundMusic from '../assets/background_music.mp3'
+import backgroundMusic from '../assets/background.mp3'
 
 
 export const Events = {
