@@ -11,5 +11,5 @@ export default defineConfig({
  build:{
   target: 'esnext'
  },
- assetsInclude: ["**/*.task", "**/*.glb"]
+ assetsInclude: ["**/*.task", "**/*.mp3","**/*.glb","**/*.gltf", "**/*.fbx"]
 })

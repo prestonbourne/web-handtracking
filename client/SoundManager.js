@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import { Sound } from "./utils/constants";
+import { Assets, Sound } from "./utils/constants";
 
 class SoundManager {
   constructor() {
@@ -9,13 +9,18 @@ class SoundManager {
   }
 
   start() {
+    
     Tone.start();
+    this.backgroundMusic()
   }
 
-  simpleSound() {
-    const synth = new Tone.Synth().toDestination();
-    const now = Tone.now();
-    synth.triggerAttackRelease("C4", "8n", now);
+  backgroundMusic() {
+    
+    const player = new Tone.Player(Assets.BackgroundMusic).toDestination();
+   Tone.loaded().then(() => {
+    player.start( )
+   })
+   
   }
 
   playCollisionSound() {

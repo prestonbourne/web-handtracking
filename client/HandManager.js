@@ -10,7 +10,8 @@ class HandManager {
     this.arrowGroup = new THREE.Group();
     this.rayGroup = [];
 
-    this.geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+   
+    this.geometry =  new THREE.SphereGeometry(0.15)
     this.material = new THREE.MeshNormalMaterial()
 
     this.handMesh = new THREE.InstancedMesh(this.geometry, this.material, 21);
@@ -91,7 +92,7 @@ class HandManager {
       );
 
       intersects.forEach((intersection) => {
-        if (intersection.distance <= 0.2) {
+        if (intersection.distance <= 1) {
           window.dispatchEvent(
             new CustomEvent(Events.HandCollision, {
               detail: intersection.object,
@@ -114,19 +115,10 @@ class HandManager {
 
       const dir = vector.sub(camera.position).normalize();
       dir.setX(-dir.x);
-      const distance = -camera.position.z / dir.z; //<- leave comment, this maps hands z coordinate to cameras z coordinate
+      const distance = -camera.position.z / dir.z; //<- this maps hands z coordinate to cameras z coordinate
       const pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
       const quaternion = new THREE.Quaternion();
-      /* Swap this with the other setFromEuler for cool effect 
-     quaternion.setFromEuler(
-       new THREE.Euler(
-         (Math.random() - 0.5) * Math.PI * 2,
-         (Math.random() - 0.5) * Math.PI * 2,
-         0
-        )
-     );
-      */
 
       quaternion.setFromEuler(new THREE.Euler());
 
