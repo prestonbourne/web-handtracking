@@ -69,7 +69,7 @@ export class GameManager {
   handleCollision(e) {
     scoreManager.increment();
     ui.score = scoreManager.score;
-    socket.send('Z is Ugly')
+    socket.send(1)
     unitsManager.activeObjects.remove(e.detail);
 
     //TODO: Animation when object is destroyed???
