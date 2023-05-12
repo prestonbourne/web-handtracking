@@ -9,7 +9,6 @@ class UnitsManager {
   }
 
   start() {
-    
     this._handleAddObjects();
   }
 
@@ -34,14 +33,17 @@ class UnitsManager {
     ];
     const randomIdx = Math.floor(generateRandInt(0, colors.length - 1));
 
-   const randomMat =  new THREE.MeshLambertMaterial({color:new THREE.Color(colors[randomIdx]) })
+    const randomMat = new THREE.MeshLambertMaterial({
+      color: new THREE.Color(colors[randomIdx]),
+    });
     //this.material.color = new THREE.Color(colors[randomIdx])
-  
-   
+    randomMat.emissiveIntensity = 0;
+
     return randomMat;
   }
 
   _spawnCube() {
+    
     const newCube = new THREE.Mesh(this.randomGeometry, this.randomMaterial);
     newCube.position.setX(generateRandInt(-2, 2));
 
@@ -58,14 +60,14 @@ class UnitsManager {
   }
 
   _handleAddObjects() {
-    setInterval(this._spawnCube.bind(this), 500);
+    setInterval(this._spawnCube.bind(this), 900);
   }
 
   handleRemoveObjects() {
     this.activeObjects.children.forEach((obj) => {
       if (obj.position.z >= 8) {
         this.activeObjects.remove(obj);
-        scoreManager.score--
+        scoreManager.score--;
       }
     });
   }
