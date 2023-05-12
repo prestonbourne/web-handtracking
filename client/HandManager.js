@@ -1,5 +1,5 @@
 import { Events } from "./utils/constants";
-import { gameManger } from "./GameManager";
+import { gameManager } from "./GameManager";
 import { landmarkStore } from "./LandmarkStore";
 import * as THREE from "three";
 import { unitsManager } from "./UnitsManager";
@@ -84,7 +84,7 @@ class HandManager {
 
   _handleCollisions() {
     if (!this.raysAdded) return;
-    if (!gameManger.isPlaying) return;
+   
 
     this.rayGroup.forEach((ray) => {
       const intersects = ray.intersectObjects(
@@ -133,6 +133,7 @@ class HandManager {
 
   render(camera, debugMode) {
     this.debugMode = debugMode;
+    if (!gameManager.isPlaying) return;
 
     this._placeCubesByLandmark(camera);
     this._handleCollisions();

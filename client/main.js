@@ -1,3 +1,5 @@
-import { gameManger } from "./GameManager";
+import { gameManager } from "./GameManager";
 
-gameManger.init()
+
+gameManager.init();
+gameManager._play()
