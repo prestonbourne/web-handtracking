@@ -23,6 +23,7 @@ class SoundManager {
 
   backgroundMusic() {
     const player = new Tone.Player(Assets.BackgroundMusic).toDestination();
+    player.loop = true
 
     Tone.loaded().then(() => {
       player.start();
