@@ -1,53 +1,6 @@
-
-
-export const postSerialMessage = async (data) => {
-  const jsonData = JSON.stringify(data);
- 
-  try {
-    const res = await fetch("https://localhost:3000", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: jsonData,
-    });
-    console.log(res)
-  } catch (error) {
-
-   console.error(error);
-
-  }
-
- 
-};
-
-export const postData = async (data) => {
-  const jsonData = JSON.stringify(data);
- 
-  try {
-    const res = await fetch("http://localhost:3001/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: jsonData,
-    });
-    
-  } catch (error) {
-
-  // console.error(error);
-
-  }
-
- 
-};
-
-
- export function debounce(callback, delay = 1000) {
+export function debounce(callback, delay = 1000) {
   let time;
-  
+
   return (...args) => {
     clearTimeout(time);
     time = setTimeout(() => {
@@ -57,36 +10,29 @@ export const postData = async (data) => {
 }
 
 export const throttle = (callback, delay = 1500) => {
-
   let shouldWait = false;
 
-
   return (...args) => {
-    if(shouldWait) return
-    callback(...args)
+    if (shouldWait) return;
+    callback(...args);
     shouldWait = true;
     setTimeout(() => {
-      shouldWait = false
-    }, delay)
-  }
+      shouldWait = false;
+    }, delay);
+  };
+};
 
-}
+export const generateRandInt = (min, max) => {
+  const random = Math.random() * (max - min + 1) + min;
 
-export const generateRandInt = (min,max) => {
-  
-  const random = (Math.random() * (max - min + 1) + min);
- 
-  
+  if (random > max) return Math.floor(random);
 
-  if(random > max) return  Math.floor(random);
+  if (random < min) return Math.ceil(random);
 
-  if(random < min) return  Math.ceil(random);
-
-  return random
-
-}
+  return random;
+};
 
 export const generateRandFloat = (min, max) => {
-  const random = (Math.random() * (max - min + 1) + min);
+  const random = Math.random() * (max - min + 1) + min;
   return random;
-}
+};

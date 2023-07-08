@@ -48,7 +48,6 @@ export class GameManager {
   handleCollision(e) {
     scoreManager.increment();
     ui.score = scoreManager.score;
-    socket.send(1);
     unitsManager.activeObjects.remove(e.detail);
 
     //TODO: Animation when object is destroyed???
@@ -132,8 +131,6 @@ export class GameManager {
     soundManager.start();
 
     ui.init();
-    unitsManager.start();
-
     this.isPlaying = true;
   }
 
@@ -144,8 +141,9 @@ export class GameManager {
 
     this.debugMode && ui.statsBegin();
 
+    unitsManager.handleObjects();
     unitsManager.handleAnimateObjects(this.deltaTime);
-    unitsManager.handleRemoveObjects();
+
     handManager.landmarks = landmarkStore.landmarks;
 
     environment.loop(this.deltaTime);

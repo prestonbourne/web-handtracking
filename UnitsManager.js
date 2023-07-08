@@ -1,15 +1,13 @@
 import * as THREE from "three";
 import { generateRandFloat, generateRandInt } from "./utils/helpers";
 import { scoreManager } from "./ScoreManager";
+import { Events } from "./utils/constants";
 
 class UnitsManager {
   constructor() {
     this.activeObjects = new THREE.Group();
     this.material = new THREE.MeshLambertMaterial();
-  }
-
-  start() {
-    this._handleAddObjects();
+    this.lastSpawned = 0;
   }
 
   get randomGeometry() {
@@ -43,27 +41,36 @@ class UnitsManager {
   }
 
   _spawnCube() {
-    
     const newCube = new THREE.Mesh(this.randomGeometry, this.randomMaterial);
     newCube.position.setX(generateRandInt(-2, 2));
 
     newCube.position.setY(generateRandInt(1, 2));
     newCube.position.setZ(-12);
-
+    console.log("new cube");
     this.activeObjects.add(newCube);
   }
 
   handleAnimateObjects(deltaTime) {
     this.activeObjects.children.forEach((obj, i) => {
-      obj.position.z += 9 * deltaTime;
+      obj.position.z += 7 * deltaTime;
     });
   }
 
   _handleAddObjects() {
-    setInterval(this._spawnCube.bind(this), 900);
+    //should spawn every 600ms
+    const now = Date.now();
+    if (now > this.lastSpawned + 700) {
+      this._spawnCube();
+      this.lastSpawned = now;
+    }
   }
 
-  handleRemoveObjects() {
+  handleObjects() {
+    this._handleAddObjects();
+    this._handleRemoveObjects();
+  }
+
+  _handleRemoveObjects() {
     this.activeObjects.children.forEach((obj) => {
       if (obj.position.z >= 8) {
         this.activeObjects.remove(obj);
