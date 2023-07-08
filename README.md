@@ -12,11 +12,11 @@ Currently, several issues are encountered once the project is built and hosted o
 Mediapipe's vision task isn't able to run in a web worker so currently there are issues with performance.
 
 ## Running the project
-The server directory is considered with interfacing with the hardware via [socket.io](https://socket.io/), the bulk of the logic is in the client so once you clone the project navigate into that directory.
+The server directory is only considered when with interfacing with the hardware via [socket.io](https://socket.io/), so the bulk of the logic is in the client so once you clone the project navigate into that directory.
 
-The client uses [Vite](https://vitejs.dev/) as a module bundler, the default package manager is [pnpm](https://pnpm.io/). However, you can use whatever package manager you like by deleting `pnpm-lock.yaml` and running `npm install` or `yarn install`.
+The client uses [Vite](https://vitejs.dev/) as a module bundler, the default package manager is [pnpm](https://pnpm.io/). However, you can use whatever package manager you like by deleting `pnpm-lock.yaml` and running `npm install` or `yarn`.
 
-Once you have `node_modules` run `pnpm run dev`. 
+Once you have `node_modules` run the dev command for your package manager, eg. `pnpm run dev`. 
 
 
 ### Code
