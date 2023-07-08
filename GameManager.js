@@ -138,7 +138,6 @@ export class GameManager {
   }
 
   _play() {
-    console.time();
     this.deltaTime = this.clock.getDelta();
 
     window.requestAnimationFrame(this._play.bind(this));
@@ -156,7 +155,6 @@ export class GameManager {
     this.effects.composer.render();
     // this.renderer.render(this.scene, this.playerCam);
     this.debugMode && ui.statsEnd();
-    console.timeEnd();
   }
 }
 
