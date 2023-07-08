@@ -10,7 +10,6 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import socket from "./socket";
 import { environment } from "./EnvironmentManager";
 
 export class GameManager {
@@ -49,7 +48,7 @@ export class GameManager {
   handleCollision(e) {
     scoreManager.increment();
     ui.score = scoreManager.score;
-    socket.send( 1);
+    socket.send(1);
     unitsManager.activeObjects.remove(e.detail);
 
     //TODO: Animation when object is destroyed???
@@ -131,18 +130,16 @@ export class GameManager {
   _start() {
     this._play();
     soundManager.start();
-   
+
     ui.init();
     unitsManager.start();
-  
+
     this.isPlaying = true;
   }
-
 
   _play() {
     console.time();
     this.deltaTime = this.clock.getDelta();
-  
 
     window.requestAnimationFrame(this._play.bind(this));
 
@@ -159,7 +156,7 @@ export class GameManager {
     this.effects.composer.render();
     // this.renderer.render(this.scene, this.playerCam);
     this.debugMode && ui.statsEnd();
-    console.timeEnd()
+    console.timeEnd();
   }
 }
 
