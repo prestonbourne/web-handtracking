@@ -6,8 +6,8 @@ import py from "../assets/skybox/py.png";
 import pz from "../assets/skybox/pz.png";
 import soundwave from "../assets/models/GameTitle1.glb";
 import environment from "../assets/models/env/FinalSkyBox.fbx";
-import backgroundMusic from "../assets/background.mp3";
-import * as THREE from 'three'
+import backgroundMusic from "../assets/background_music.mp3";
+import * as THREE from "three";
 
 export const Events = {
   LandmarksUpdate: "landmarks_update",
@@ -35,16 +35,16 @@ export const Assets = {
 // };
 
 export const Colors = {
- get Pink(){
-  return new THREE.Color(0.75,0,.65)
- },
- get Cyan(){
-  return new THREE.Color("rgb(0, 253, 255)")
- },
- get Yellow(){
-  return new THREE.Color("rgb(222, 255, 0)")
- },
- get Black(){
-  return new THREE.Color(0,0,0)
- }
-}
+  get Pink() {
+    return new THREE.Color(0.75, 0, 0.65);
+  },
+  get Cyan() {
+    return new THREE.Color("rgb(0, 253, 255)");
+  },
+  get Yellow() {
+    return new THREE.Color("rgb(222, 255, 0)");
+  },
+  get Black() {
+    return new THREE.Color(0, 0, 0);
+  },
+};
