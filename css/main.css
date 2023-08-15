@@ -68,6 +68,14 @@ main #game_overlay {
   position: absolute;
   pointer-events: none;
 }
+main #game_overlay footer {
+  bottom: 2rem;
+  position: absolute;
+}
+main #game_overlay footer #instructions {
+  color: white;
+  font-size: large;
+}
 main #game_overlay #score_container {
   align-self: flex-start;
   top: 0;
@@ -102,7 +110,8 @@ main #game_overlay #debug_toggle_container {
 main #game_overlay #debug_toggle_container label {
   color: white;
 }
-main #game_overlay #debug_toggle_container input, main #game_overlay #debug_toggle_container label {
+main #game_overlay #debug_toggle_container input,
+main #game_overlay #debug_toggle_container label {
   pointer-events: all;
 }
 
