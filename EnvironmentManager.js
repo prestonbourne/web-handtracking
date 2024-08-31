@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader";
 import { Assets, Colors } from "./utils/constants";
 import { FBXLoader } from "three/addons/loaders/FBXLoader";
-import { gameManager } from "./GameManager";
 
 const ColorLerps = {
   ToCyan: "LerpToCyan",
@@ -23,7 +22,7 @@ class EnvironmentManager {
       /**
        * @type { THREE.Mesh }
        */
-      
+
       this.envMesh = obj.children[0];
       this.envMesh.rotation.z = Math.PI / 2;
       this.envMesh.position.y = -120;
@@ -31,13 +30,12 @@ class EnvironmentManager {
       /**
        * @type {THREE.Material}
        */
-    const mainMat = this.envMesh.material[1];
-    mainMat.color = Colors.Pink;
-     mainMat.emissive = new THREE.Color(.1,.1,.1)
-     
-      
+      const mainMat = this.envMesh.material[1];
+      mainMat.color = Colors.Pink;
+      mainMat.emissive = new THREE.Color(0.1, 0.1, 0.1);
+
       mainMat.emissiveIntensity = 0.3;
-    
+
       this.envMesh.material[0].emissiveIntensity = 0;
     });
 
@@ -105,7 +103,6 @@ class EnvironmentManager {
   }
 
   handleTerrainVFX() {
-  
     switch (this.currLerp) {
       case ColorLerps.ToCyan:
         if (this._lerpCounter > 1) {
@@ -113,7 +110,7 @@ class EnvironmentManager {
           this.currLerp = ColorLerps.ToPink;
           return;
         }
-      
+
         this.terrainLight.color.lerp(Colors.Cyan, this._lerpCounter);
 
         break;
@@ -124,8 +121,7 @@ class EnvironmentManager {
           this.currLerp = ColorLerps.ToBlack;
           return;
         }
-       
-        
+
         this.terrainLight.color.lerp(Colors.Pink, this._lerpCounter);
         break;
       case ColorLerps.ToBlack:
@@ -134,8 +130,7 @@ class EnvironmentManager {
           this.currLerp = ColorLerps.ToCyan;
           return;
         }
-       
-        
+
         this.terrainLight.color.lerp(Colors.Black, this._lerpCounter);
         break;
     }

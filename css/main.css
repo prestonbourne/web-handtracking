@@ -29,6 +29,11 @@ html, body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  --clr-shadow__border: #d9a1ff;
+  --clr-text: #F6F4EB;
+  --clr-space: #120e1e;
+  --clr-space-gr: #271950;
+  --clr-star: #E9F8F9;
 }
 
 /*
@@ -76,20 +81,113 @@ main #game_overlay footer #instructions {
   color: white;
   font-size: large;
 }
+
+
+#output_container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 360px;
+  height: 240px;
+  pointer-events: auto;
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+#output_container video {
+  position: absolute;
+}
+#output_container #output_canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#start_button_wrapper {
+
+  --size: 3rem;
+  position: relative;
+  border: 2px solid var(--clr-shadow__border);
+  border-radius: 24px 8px;
+  overflow: hidden;
+}
+
+#start_game_button {
+  appearance: none;
+  font-weight: 600;
+  cursor: pointer;
+  pointer-events: auto;
+  font-size: 1.5rem;
+  touch-action: manipulation;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  letter-spacing: 0.2rem;
+  background: transparent;
+  padding: calc(var(--size) / 3) var(--size);
+  border: none;
+  cursor: pointer;
+  color: white;
+  text-shadow: 2px 0px var(--clr-shadow__border), 0px 2px var(--clr-shadow__border),
+  -2px 0px var(--clr-shadow__border), 0px -2px var(--clr-shadow__border);
+  
+}
+
+.space {
+  width: 100%;
+  height: 100%;
+  bottom: 0%;
+  gap: 1.5rem;
+  transition: 0.5s ease-in-out;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  background: linear-gradient( 160deg, var(--clr-space), var(--clr-space-gr));
+}
+
+#start_button_wrapper:hover .space {
+  opacity: 1;
+}
+
+.star {
+  height: 4rem;
+  width: 0.3rem;
+  transition: 0.5s;
+  border-radius: 50px;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  position: relative;
+  background-color: var(--clr-star);
+  animation: space-animation calc(0.1s * var(--i)) linear infinite;
+}
+
+@keyframes space-animation {
+  0% {
+    transform: rotate(-30deg) translateY(calc(-52% * var(--i)));
+  }
+
+  100% {
+    transform: rotate(-30deg) translateY(calc(52% * var(--i)));
+  }
+}
+
 main #game_overlay #score_container {
-  align-self: flex-start;
+  display: none;
   top: 0;
   left: 0;
-  justify-self: start;
-  display: none;
   width: 20%;
   height: 64px;
-  background-color: plum;
-  border-bottom-right-radius: 16px;
+  border-bottom-right-radius: 12px;
   position: absolute;
   align-items: center;
   justify-content: center;
+  border-bottom: 2px solid #d9a1ff;
+  border-right: 2px solid #d9a1ff;
+  text-shadow: 2px 0px var(--clr-shadow__border), 0px 2px var(--clr-shadow__border),
+  -2px 0px var(--clr-shadow__border), 0px -2px var(--clr-shadow__border);
 }
+
 main #game_overlay #score_container p {
   color: aliceblue;
   font-size: larger;
@@ -115,71 +213,6 @@ main #game_overlay #debug_toggle_container label {
   pointer-events: all;
 }
 
-#output_container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 360px;
-  height: 240px;
-  pointer-events: auto;
-  -moz-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-#output_container video {
-  position: absolute;
-}
-#output_container #output_canvas {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-
-#start_game_button {
-  align-items: center;
-  appearance: none;
-  background-color: #FCFCFD;
-  border-radius: 4px;
-  border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px, rgba(45, 35, 66, 0.15) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #36395A;
-  cursor: pointer;
-  pointer-events: auto;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding: 16px 16px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: box-shadow 0.15s, transform 0.15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow, transform;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-#start_game_button:focus {
-  outline: blue solid 2px;
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
-#start_game_button:hover {
-  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  transform: translateY(-1px);
-}
-
-#start_game_button:active {
-  box-shadow: #D6D6E7 0 3px 7px inset;
-  transform: translateY(1px);
-}
-
 #info-box {
   background-color: rgb(42, 42, 42);
   font-size: 12px;
@@ -191,6 +224,7 @@ main #game_overlay #debug_toggle_container label {
   border-radius: 4px;
   overflow: hidden;
 }
+
 #info-box div {
   opacity: 1;
   display: none;
@@ -201,9 +235,11 @@ main #game_overlay #debug_toggle_container label {
   transition: max-height 0.2s ease-out;
   text-align: left;
 }
+
 #info-box div p {
   color: white;
 }
+
 #info-box button {
   color: white;
   cursor: pointer;
