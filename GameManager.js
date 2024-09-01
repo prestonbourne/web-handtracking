@@ -3,7 +3,7 @@ import { ui } from "./UIManager";
 import { unitsManager } from "./UnitsManager";
 import { scoreManager } from "./ScoreManager";
 import { landmarkStore } from "./LandmarkStore";
-import { Assets, Events } from "./utils/constants";
+import { Events } from "./utils/constants";
 import { handManager } from "./HandManager";
 import { soundManager } from "./SoundManager";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -51,7 +51,6 @@ export class GameManager {
     unitsManager.activeObjects.remove(e.detail);
 
     //TODO: Animation when object is destroyed???
-
     soundManager.playCollisionSound();
   }
   _handleToggleDebugMode(e) {
